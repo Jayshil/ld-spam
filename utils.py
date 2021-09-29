@@ -1,3 +1,4 @@
+from sys import path
 import numpy as np
 import matplotlib.pyplot as plt
 import os
@@ -45,7 +46,7 @@ def freedman_diaconis(data, returnas="width"):
 	return(result)
 
 
-def image_double(xdata1, xdata2, xerr1, xerr2, ydata1, ydata2, yerr1, yerr2, save=False, path=os.getcwd()):
+def image_double(xdata1, xdata2, xerr1, xerr2, ydata1, ydata2, yerr1, yerr2, label1, label2, xlabel, ylabel, ttl, save=False, path=os.getcwd()):
     """
     Function to make figures according
     to Patel & Espinoza (2021) pattern
@@ -63,6 +64,7 @@ def image_double(xdata1, xdata2, xerr1, xerr2, ydata1, ydata2, yerr1, yerr2, sav
         errors on ydata1, ydata2
     save : bool
         if True, save the figure at Path
+        default is False
     path : str
         location to save the image
     -----------
@@ -88,61 +90,75 @@ def image_double(xdata1, xdata2, xerr1, xerr2, ydata1, ydata2, yerr1, yerr2, sav
     low_lim = np.minimum(xmin, ymin)
     upp_lim = np.maximum(xmax, ymax)
 
-    x1u1_c_p = y1u1_c_p = np.linspace(xlo, xup, 100)
-    y11u1_c_p = np.zeros(len(x1u1_c_p))
+    # Making a line for xdata = ydata, and for
+    # ydata = 0 for the bottom panel
+    xlin = ylin = np.linspace(low_lim, upp_lim, 100)
 
-    diff_u1_c_p = np.array([])#--------------------------------------------------------------------------------------------
-    diff_u1_c_pe = np.array([])#-------------------------------------------------------------------------------------------
+    # Difference between xdata1 and ydata1
+    diff_1, diff_1e = np.zeros(len(xdata1)), np.zeros(len(xdata1))
+
+    for i in range(len(xdata1)):
+        x11 = np.random.normal(xdata1[i], xerr1[i], 10000)
+        y11 = np.random.normal(ydata1[i], yerr1[i], 10000)
+        diff1 = x11 - y11
+        d11_m = np.median(diff1)
+        d11_e = np.std(diff1)
+        diff_1[i], diff_1e[i] = d11_m, d11_e
+
+    # Difference between xdata2 and ydata2
+    diff_2, diff_2e = np.zeros(len(xdata1)), np.zeros(len(xdata1))
 
     for i in range(len(u1_j)):
-        u11_c_p = np.random.normal(u1_c_p[i], 0, 10000)
-        u11_j = np.random.normal(u1_j[i], u1_jp[i], 10000)
-        diff1 = u11_c_p - u11_j
-        u11_m = np.median(diff1)
-        u11_e = np.std(diff1)
-        diff_u1_c_p = np.hstack((diff_u1_c_p, u11_m))
-        diff_u1_c_pe = np.hstack((diff_u1_c_pe, u11_e))
+        x22 = np.random.normal(xdata2[i], xerr2[i], 10000)
+        y22 = np.random.normal(ydata2[i], yerr2[i], 10000)
+        diff2 = x22 - y22
+        d22_m = np.median(diff2)
+        d22_e = np.std(diff2)
+        diff_2[i], diff_2e[i] = d22_m, d22_e
 
-    diff_u1_c_a = np.array([])#--------------------------------------------------------------------------------------------
-    diff_u1_c_ae = np.array([])#-------------------------------------------------------------------------------------------
+    # Plotting figures
+    fig1 = plt.figure(figsize=(8,10))
+    gs1 = gd.GridSpec(2, 1, height_ratios = [4,1])
 
-    for i in range(len(u1_j)):
-        u11_c_a = np.random.normal(u1_c_a[i], 0, 10000)
-        u11_j = np.random.normal(u1_j[i], u1_jp[i], 10000)
-        diff1 = u11_c_a - u11_j
-        u11_m = np.median(diff1)
-        u11_e = np.std(diff1)
-        diff_u1_c_a = np.hstack((diff_u1_c_a, u11_m))
-        diff_u1_c_ae = np.hstack((diff_u1_c_ae, u11_e))
+    # Upper Panel
+    ax1 = plt.subplot(gs1[0])
 
+    ax1.errorbar(xdata1, ydata1, xerr = xerr1, yerr = yerr1, fmt='.', elinewidth=1, alpha=0.5, color='orangered', zorder=5, label = label1)
+    ax1.errorbar(xdata2, ydata2, xerr = xerr2, yerr = yerr2, fmt='.', elinewidth=1, alpha=0.5, color='cornflowerblue',zorder=5, label = label2)
 
-    fig_u1_c_p = plt.figure(figsize=(8,10))
-    gs_u1_c_p = gd.GridSpec(2, 1, height_ratios = [4,1])
+    ax1.plot(xlin, ylin, 'k--')
+    ax1.grid()
 
-    ax_u1_c_p = plt.subplot(gs_u1_c_p[0])
-
-    ax_u1_c_p.errorbar(u1_j, u1_c_p, xerr = [u1_jn, u1_jp], fmt='.', elinewidth=1, alpha=0.5, color='orangered', zorder=5, label = 'PHOENIX LDCs')
-    ax_u1_c_p.errorbar(u1_j, u1_c_a, xerr = [u1_jn, u1_jp], fmt='.', elinewidth=1, alpha=0.5, color='cornflowerblue',zorder=5, label = 'ATLAS LDCs')
-
-    ax_u1_c_p.plot(x1u1_c_p, y1u1_c_p, 'k--')
-    ax_u1_c_p.grid()
-
-    ax_u1_c_p.set_xlim([xlo, xup])
-    ax_u1_c_p.set_ylim([xlo, xup])
+    ax1.set_xlim([low_lim, upp_lim])
+    ax1.set_ylim([low_lim, upp_lim])
 
     plt.legend(loc='best')
-    plt.ylabel(r'$u_1$ (Theoretical)')
-    plt.xlabel(r'$u_1$ (Empirical)')
-    plt.title('Values from Claret(2017)')
+    plt.ylabel(xlabel)
+    plt.xlabel(ylabel)
+    plt.title(ttl)
 
-    ax1_u1_c_p = plt.subplot(gs_u1_c_p[1])#, sharex = ax_u1_c_p)
+    # Bottom Panel
+    ax2 = plt.subplot(gs1[1])#, sharex = ax_u1_c_p)
 
-    ax1_u1_c_p.hist(diff_u1_c_p, bins=utl.freedman_diaconis(data=diff_u1_c_p, returnas="bins"), alpha=0.7, color='orangered', zorder=5)
-    ax1_u1_c_p.hist(diff_u1_c_a, bins=utl.freedman_diaconis(data=diff_u1_c_a, returnas="bins"), alpha=0.7, color='cornflowerblue', zorder=5)
+    ax2.hist(diff_1, bins=freedman_diaconis(data=diff_1, returnas="bins"), alpha=0.7, color='orangered', zorder=5)
+    ax2.hist(diff_2, bins=freedman_diaconis(data=diff_2, returnas="bins"), alpha=0.7, color='cornflowerblue', zorder=5)
 
     plt.ylabel('Count')
     plt.xlabel('Residuals')
 
     plt.subplots_adjust(hspace = 0.3)
-    plt.savefig(path1 + '/Results/cal_us_and_evidance/u1_cla.pdf')
-    plt.close(fig_u1_c_p)
+    if save:
+        plt.savefig(path + '/fig1.png')
+
+
+path1 = '/home/jayshil/Documents/Dissertation/ld-project-updated'
+
+# Let's make ATLAS Clatet (2017) and Phoenix Claret (2017) comparison with juliet to test the function
+u1_a = np.loadtxt(path1 + '/Atlas/claret_limiting_LDC_ata.dat', usecols=1, unpack=True)
+u1_p = np.loadtxt(path1 + '/Phoenix/claret_limiting_LDC_pho_r.dat', usecols=1, unpack=True)
+u1_j, u1_jp, u1_jn, u2_j, u2_jp, u2_jn = np.loadtxt(path1 + '/Data/results.dat', usecols = (16,17,18,19,20,21), unpack = True)
+
+image_double(xdata1=u1_j, xdata2=u1_j, xerr1=u1_jp, xerr2=u1_jp, ydata1=u1_a, ydata2=u1_p, yerr1=np.zeros(len(u1_a)),\
+     yerr2=np.zeros(len(u1_a)), label1='ATLAS LDCs', label2='Phoenix LDCs', xlabel='Observed LDCs', ylabel='Theoretical LDCs',\
+          ttl='Claret (2017) LDCs', save=False, path=os.getcwd())
+plt.show()
