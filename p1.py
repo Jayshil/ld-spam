@@ -33,5 +33,6 @@ for i in range(len(a_j)):
     u1_mcs, u2_mcs = mcs.mc_spam(time=tt, per=p_j[i], per_err=p_e[i], rp=r_j[i], rp_err=r_e[i], \
                                  a=a_j[i], a_err=a_e[i], b=b_j[i], b_err=b_e[i], u=[c1[i],c2[i],c3[i], c4[i]])
     f1.write(nn[i] + '\t' + str(np.median(u1_mcs)) + '\t' + str(np.std(u1_mcs)) + '\t' + str(np.median(u2_mcs)) + '\t' + str(np.std(u2_mcs)) + '\n')
+    print("--------   Completed " + str(i+1) + " systems / out of " + str(len(a_j)) + " system!")
 
 f1.close()
