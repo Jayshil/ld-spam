@@ -6,6 +6,7 @@ import batman
 
 def transit(time, t0, per, rp, a, b, ecc, w, u, law):
     """
+    -----------
     Parameters:
     -----------
     time : numpy.ndarray
@@ -50,3 +51,55 @@ def transit(time, t0, per, rp, a, b, ecc, w, u, law):
     m = batman.TransitModel(para, time)
     fl = m.light_curve(para)
     return fl
+
+
+def spam(time, per, rp, a, b, u, ecc=0., w=90., t0=0.):
+    """
+    -----------
+    Parameters:
+    -----------
+    time : numpy.ndarray
+        time at which the flux is calculated
+    per : float
+        orbital period of exoplanet (in days)
+    rp : float
+        square-root of tansit depth
+    a : float
+        scaled semi-major axis
+    b : float
+        impact parameter
+    u : array like
+        non-linear limb-darkening coefficients
+    ecc : float
+        eccentricity of the orbit
+        default is 0.
+    w : float
+        longitude of peri-astron passage (in deg)
+        default is 90 deg
+    t0 : float
+        transit central time (in days/or the same as period)
+        default is 0.
+    -----------
+    return
+    -----------
+    numpy.ndarray
+        array containing SPAM LDCs
+    """
+    synthetic_flux = transit(time, t0, per, rp, a, b, ecc, w, u, "nonlinear")
+    def min_log_likelihood(x):
+        model = transit(time, t0, per, rp, a, b, ecc, w, x, "quadratic")
+        chi2 = np.sum((synthetic_flux-model)**2)
+        return chi2
+    u1_guess, u2_guess = (12./35.)*u[0] + u[1] + (164./105.)*u[2] + 2.*u[3], (10./21.)*u[0] - (34./63.)*u[2] - u[3]
+    soln = mz(min_log_likelihood, x0=[u1_guess, u2_guess], method='L-BFGS-B')
+    return soln.x
+
+def mc_spam(time, per, per_err, rp, rp_err, a, a_err, b, b_err, u, ecc=0., w=90., t0=0.):
+    period = np.random.normal(per, per_err, 1000)
+    rp1 = np.random.normal(rp, rp_err, 1000)
+    ar1 = np.random.normal(a, a_err, 1000)
+    b1 = np.random.normal(b, b_err, 1000)
+    u1_mcs, u2_mcs = np.zeros(1000), np.zeros(1000)
+    for i in tqdm(range(len(period))):
+        u1_mcs[i], u2_mcs[i] = spam(time, period[i], rp1[i], ar1[i], b1[i], u)
+    return u1_mcs, u2_mcs
