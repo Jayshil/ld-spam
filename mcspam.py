@@ -95,6 +95,37 @@ def spam(time, per, rp, a, b, u, ecc=0., w=90., t0=0.):
     return soln.x
 
 def mc_spam(time, per, per_err, rp, rp_err, a, a_err, b, b_err, u, ecc=0., w=90., t0=0.):
+    """
+    -----------
+    Parameters:
+    -----------
+    time : numpy.ndarray
+        time at which the flux is calculated
+    per, per_err : float
+        orbital period and error in it (in days)
+    rp, rp_err : float
+        square-root of tansit depth and its error
+    a, a_err : float
+        scaled semi-major axis and error in it
+    b, b_err : float
+        impact parameter and its error
+    u : array like
+        non-linear limb-darkening coefficients
+    ecc : float
+        eccentricity of the orbit
+        default is 0.
+    w : float
+        longitude of peri-astron passage (in deg)
+        default is 90 deg
+    t0 : float
+        transit central time (in days/or the same as period)
+        default is 0.
+    -----------
+    return
+    -----------
+    numpy.ndarray, numpy.ndarray
+        arrays containing distribution in MC-SPAM LDCs
+    """
     period = np.random.normal(per, per_err, 1000)
     rp1 = np.random.normal(rp, rp_err, 1000)
     ar1 = np.random.normal(a, a_err, 1000)
