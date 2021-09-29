@@ -77,17 +77,16 @@ def image_double(xdata1, xdata2, xerr1, xerr2, ydata1, ydata2, yerr1, yerr2, sav
     x2max, x2min = np.max(xdata2), np.min(xdata2)
 
     xmin, xmax = np.minimum(x1min, x2min), np.maximum(x1max, x2max)
-    
+
     # y-limit
     y1max, y1min = np.max(ydata1), np.min(ydata1)
     y2max, y2min = np.max(ydata2), np.min(ydata2)
 
     ymin, ymax = np.minimum(y1min, y2min), np.maximum(y1max, y2max)
 
-    xlo = np.minimum(xlu1_c_p, xlu1_c_a)
-    xup = np.maximum(xuu1_c_p, xuu1_c_a)
-
-    xlo, xup = -0.4, 1.4
+    # limits on the plot to make the figure square
+    low_lim = np.minimum(xmin, ymin)
+    upp_lim = np.maximum(xmax, ymax)
 
     x1u1_c_p = y1u1_c_p = np.linspace(xlo, xup, 100)
     y11u1_c_p = np.zeros(len(x1u1_c_p))
