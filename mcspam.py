@@ -1,7 +1,8 @@
+from time import time
 import numpy as np
 import matplotlib.pyplot as plt
 from scipy.optimize import minimize as mz
-import tqdm
+from tqdm import tqdm
 import batman
 
 def transit(time, t0, per, rp, a, b, ecc, w, u, law):
