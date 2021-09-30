@@ -33,7 +33,7 @@ def freedman_diaconis(data, returnas="width"):
 		If "bins", return the number of bins suggested by rule.
 	"""
 	data = np.asarray(data, dtype=np.float_)
-	IQR = stats.iqr(data, rng=(25, 75), scale="raw", nan_policy="omit")
+	IQR = stats.iqr(data, rng=(25, 75), scale=1.0, nan_policy="omit")
 	N = data.size
 	bw = (2 * IQR) / np.power(N, 1/3)
 	if returnas=="width":
