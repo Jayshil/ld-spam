@@ -147,7 +147,7 @@ def image_double(xdata1, xdata2, xerr1, xerr2, ydata1, ydata2, yerr1, yerr2, lab
     plt.subplots_adjust(hspace = 0.3)
 
 
-def single_image(xdata, xerr, ydata, yerr, xlabel, ylabel, ttl):
+def single_image(xdata, xerr, ydata, yerr, xlabel, ylabel):
     """
     Function to make figures according
     to Patel & Espinoza (2021) pattern
@@ -164,8 +164,6 @@ def single_image(xdata, xerr, ydata, yerr, xlabel, ylabel, ttl):
         errors on ydata
     xlabel, ylabel : str
         labels of x- and y-axis
-    ttl : str
-        title of the image
     -----------
     return
     -----------
