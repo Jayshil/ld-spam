@@ -17,10 +17,6 @@ from pylab import *
 import seaborn as sns
 
 
-
-
-
-
 def freedman_diaconis(data, returnas="width"):
 	"""
 	Use Freedman Diaconis rule to compute optimal histogram bin width. 
@@ -65,11 +61,12 @@ def image_double(xdata1, xdata2, xerr1, xerr2, ydata1, ydata2, yerr1, yerr2, lab
         data to be plotted on the y-axis
     yerr1, yerr2 : numpy.ndarray
         errors on ydata1, ydata2
-    save : bool
-        if True, save the figure at Path
-        default is False
-    path : str
-        location to save the image
+    label1, label2 : str
+        labels of two type of data
+    xlabel, ylabel : str
+        labels of axis
+    ttl : str
+        title of the image
     -----------
     return
     -----------
@@ -104,20 +101,18 @@ def image_double(xdata1, xdata2, xerr1, xerr2, ydata1, ydata2, yerr1, yerr2, lab
         x11 = np.random.normal(xdata1[i], xerr1[i], 10000)
         y11 = np.random.normal(ydata1[i], yerr1[i], 10000)
         diff1 = x11 - y11
-        d11_m = np.median(diff1)
-        d11_e = np.std(diff1)
-        diff_1[i], diff_1e[i] = d11_m, d11_e
+        diff_1[i] = np.median(diff1)
+        diff_1e[i] = np.std(diff1)
 
     # Difference between xdata2 and ydata2
     diff_2, diff_2e = np.zeros(len(xdata1)), np.zeros(len(xdata1))
 
-    for i in range(len(u1_j)):
+    for i in range(len(xdata1)):
         x22 = np.random.normal(xdata2[i], xerr2[i], 10000)
         y22 = np.random.normal(ydata2[i], yerr2[i], 10000)
         diff2 = x22 - y22
-        d22_m = np.median(diff2)
-        d22_e = np.std(diff2)
-        diff_2[i], diff_2e[i] = d22_m, d22_e
+        diff_2[i] = np.median(diff2)
+        diff_2e[i] = np.std(diff2)
 
     # Plotting figures
     fig1 = plt.figure(figsize=(8,10))
@@ -151,3 +146,81 @@ def image_double(xdata1, xdata2, xerr1, xerr2, ydata1, ydata2, yerr1, yerr2, lab
 
     plt.subplots_adjust(hspace = 0.3)
 
+
+def single_image(xdata, xerr, ydata, yerr, xlabel, ylabel, ttl):
+    """
+    Function to make figures according
+    to Patel & Espinoza (2021) pattern
+    ----------------------------------
+    Parameters:
+    -----------
+    xdata : numpy.ndarray
+        data to be plotted on the x-axis
+    xerr : numpy.ndarray
+        errors on xdata
+    ydata : numpy.ndarray
+        data to be plotted on the y-axis
+    yerr : numpy.ndarray
+        errors on ydata
+    xlabel, ylabel : str
+        labels of x- and y-axis
+    ttl : str
+        title of the image
+    -----------
+    return
+    -----------
+    matplotlib.figure
+        showing figure object
+    """
+    # Setting up the limits of the plot
+    # x-lim
+    xmax = np.max(xdata)
+    xmin = np.min(xdata)
+    # y-lim
+    ymax = np.max(ydata)
+    ymin = np.min(ydata)
+
+    # Limits of both axis to make figure square
+    low_limit = np.minimum(xmin, ymin)
+    upp_limit = np.maximum(xmax, ymax)
+
+    # Making a straight line for xdata=ydata
+    xlin = ylin = np.linspace(low_limit, upp_limit, 100)
+    yzero = np.zeros(len(xlin))
+
+    diff, diff_e = np.zeros(len(xdata)), np.zeros(len(xdata))
+
+    for i in range(len(xdata)):
+        x1 = np.random.normal(xdata[i],xerr[i],10000)
+        y1 = np.random.normal(ydata[i], yerr[i], 10000)
+        diff1 = x1 - y1
+        diff[i] = np.median(diff1)
+        diff_e[i] = np.std(diff1)
+
+    # Making figure
+    fig1 = plt.figure(figsize = (8,10))
+    gs1 = gd.GridSpec(2, 1, height_ratios = [4,1])
+
+    ax1 = plt.subplot(gs1[0])
+
+    ax1.errorbar(xdata, ydata, xerr = xerr, yerr = yerr, fmt = '.', elinewidth=1, alpha=0.5, color='black', zorder=5)
+
+    plt.xlim([low_limit, upp_limit])
+    plt.ylim([low_limit, upp_limit])
+    ax1.plot(xlin, ylin, 'k--')
+    ax1.grid()
+    plt.ylabel(ylabel)
+    #plt.title('Comparison between literature values and calculated values of a/R*')
+
+    ax2 = plt.subplot(gs1[1], sharex = ax1)
+
+    ax2.errorbar(xdata, diff, xerr = xerr, yerr = diff_e, fmt = '.', elinewidth=1, alpha=0.5, color='black', zorder=5)
+
+    plt.xlim([low_limit, upp_limit])
+    #plt.ylim([-2,2])
+    ax2.plot(xlin, yzero, 'k--')
+    ax2.grid()
+    plt.ylabel('Residuals')
+    plt.xlabel(xlabel)
+
+    plt.subplots_adjust(hspace = 0.2)
