@@ -131,8 +131,8 @@ def image_double(xdata1, xdata2, xerr1, xerr2, ydata1, ydata2, yerr1, yerr2, lab
     ax1.set_ylim([low_lim, upp_lim])
 
     plt.legend(loc='best')
-    plt.ylabel(xlabel)
-    plt.xlabel(ylabel)
+    plt.xlabel(xlabel)
+    plt.ylabel(ylabel)
     plt.title(ttl)
 
     # Bottom Panel
