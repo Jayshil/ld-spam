@@ -1,4 +1,4 @@
-from sys import path
+import sys
 import numpy as np
 import matplotlib.pyplot as plt
 import os
@@ -222,3 +222,23 @@ def single_image(xdata, xerr, ydata, yerr, xlabel, ylabel):
     plt.xlabel(xlabel)
 
     plt.subplots_adjust(hspace = 0.2)
+
+
+def limiting_ldcs(c1, c2, c3, c4):
+    """
+    To compute limiting LDCs from
+    Espinoza & Jordan (2015)
+    -----------------------------
+    Parameters:
+    -----------
+    c1, c2, c3, c4 : float, or numpy.ndarray
+        non-linear LDCs
+    -----------
+    return:
+    -----------
+    float, or numpy.ndarray
+        limiting LDCs
+    """
+    u1 = (12./35.)*c1 + c2 + (164./105.)*c3 + 2.*c4
+    u2 = (10./21.)*c1 - (34./63.)*c3 - c4
+    return u1, u2
