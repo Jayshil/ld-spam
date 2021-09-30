@@ -18,6 +18,9 @@ import seaborn as sns
 
 
 
+
+
+
 def freedman_diaconis(data, returnas="width"):
 	"""
 	Use Freedman Diaconis rule to compute optimal histogram bin width. 
@@ -148,15 +151,3 @@ def image_double(xdata1, xdata2, xerr1, xerr2, ydata1, ydata2, yerr1, yerr2, lab
 
     plt.subplots_adjust(hspace = 0.3)
 
-
-path1 = '/home/jayshil/Documents/Dissertation/ld-project-updated'
-
-# Let's make ATLAS Clatet (2017) and Phoenix Claret (2017) comparison with juliet to test the function
-u1_a = np.loadtxt(path1 + '/Atlas/claret_limiting_LDC_ata.dat', usecols=1, unpack=True)
-u1_p = np.loadtxt(path1 + '/Phoenix/claret_limiting_LDC_pho_r.dat', usecols=1, unpack=True)
-u1_j, u1_jp, u1_jn, u2_j, u2_jp, u2_jn = np.loadtxt(path1 + '/Data/results.dat', usecols = (16,17,18,19,20,21), unpack = True)
-
-image_double(xdata1=u1_j, xdata2=u1_j, xerr1=u1_jp, xerr2=u1_jp, ydata1=u1_a, ydata2=u1_p, yerr1=np.zeros(len(u1_a)),\
-     yerr2=np.zeros(len(u1_a)), label1='ATLAS LDCs', label2='Phoenix LDCs', xlabel='Observed LDCs', ylabel='Theoretical LDCs',\
-     ttl='Claret (2017) LDCs')
-plt.show()
