@@ -2,6 +2,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 from scipy.optimize import minimize as mz
 from scipy.optimize import curve_fit as cft
+from scipy.optimize import leastsq as lsq
 from tqdm import tqdm
 import batman
 
