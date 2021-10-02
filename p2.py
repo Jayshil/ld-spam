@@ -23,14 +23,14 @@ nn = np.loadtxt(p1 + '/Atlas/code_us_nl_ata.dat', usecols=0, unpack=True, dtype=
 c1, c2, c3, c4 = np.loadtxt(p1 + '/Atlas/code_us_nl_ata.dat', usecols=(1,2,3,4), unpack=True)
 
 ##### Saving Results
-f1 = open(p1r + 'MCS_Atlas_code_cft.dat', 'w')
+f1 = open(p1r + 'MCS_Atlas_code_lsq.dat', 'w')
 f1.write('#Name\t\t MCS_u1\t\t MCS_u1_err\t\t MCS_u2\t\t MCS_u2_err\n')
 
 for i in range(len(a_j)):
     t1 = p_j[i]/(a_j[i]*np.pi)
     tt = np.linspace(-t1, t1, 1000)
     # For Atlas - EJ15
-    u1_mcs, u2_mcs = mcs.mc_spam_cft(time=tt, per=p_j[i], per_err=p_e[i], rp=r_j[i], rp_err=r_e[i], \
+    u1_mcs, u2_mcs = mcs.mc_spam_lsq(time=tt, per=p_j[i], per_err=p_e[i], rp=r_j[i], rp_err=r_e[i], \
                                  a=a_j[i], a_err=a_e[i], b=b_j[i], b_err=b_e[i], u=[c1[i],c2[i],c3[i], c4[i]])
     f1.write(nn[i] + '\t' + str(np.median(u1_mcs)) + '\t' + str(np.std(u1_mcs)) + '\t' + str(np.median(u2_mcs)) + '\t' + str(np.std(u2_mcs)) + '\n')
     print("--------   Completed " + str(i+1) + " systems / out of " + str(len(a_j)) + " system!")
