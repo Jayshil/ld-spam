@@ -28,16 +28,24 @@ b_e = (b_jp + b_jn)/2
 
 
 ##### Run-2: For Atlas - Claret (2017) LDCs
-nn = np.loadtxt(p1 + '/Atlas/claret_us_nl_ata.dat', usecols=0, unpack=True, dtype=str)
-c1, c2, c3, c4 = np.loadtxt(p1 + '/Atlas/claret_us_nl_ata.dat', usecols=(1,2,3,4), unpack=True)
+#nn = np.loadtxt(p1 + '/Atlas/claret_us_nl_ata.dat', usecols=0, unpack=True, dtype=str)
+#c1, c2, c3, c4 = np.loadtxt(p1 + '/Atlas/claret_us_nl_ata.dat', usecols=(1,2,3,4), unpack=True)
 ### Saving Results
-f1 = open(p1r + 'MCS_Atlas_claret.dat', 'w')
+#f1 = open(p1r + 'MCS_Atlas_claret.dat', 'w')
+#f1.write('#Name\t\t MCS_u1\t\t MCS_u1_err\t\t MCS_u2\t\t MCS_u2_err\n')
+
+
+##### Run-2: For Phoenix - EJ15 LDCs
+nn = np.loadtxt(p1 + '/Phoenix/code_us_nl_pho.dat', usecols=0, unpack=True, dtype=str)
+c1, c2, c3, c4 = np.loadtxt(p1 + '/Phoenix/code_us_nl_pho.dat', usecols=(1,2,3,4), unpack=True)
+### Saving Results
+f1 = open(p1r + 'MCS_Phoenix_code.dat', 'w')
 f1.write('#Name\t\t MCS_u1\t\t MCS_u1_err\t\t MCS_u2\t\t MCS_u2_err\n')
 
 for i in range(len(a_j)):
     t1 = p_j[i]/(a_j[i]*np.pi)
     tt = np.linspace(-t1, t1, 1000)
-    # For Atlas - Claret (2017)
+    # For Phoenix - EJ15
     uu = [c1[i], c2[i], c3[i], c4[i]]
     if uu != [0.0, 0.0, 0.0, 0.0]:
         u1_mcs, u2_mcs = mcs.mc_spam(time=tt, per=p_j[i], per_err=p_e[i], rp=r_j[i], rp_err=r_e[i], \
