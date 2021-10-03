@@ -19,11 +19,19 @@ b_e = (b_jp + b_jn)/2
 
 
 ##### Run-1: For Atlas - EJ15 LDCs
-nn = np.loadtxt(p1 + '/Atlas/code_us_nl_ata.dat', usecols=0, unpack=True, dtype=str)
-c1, c2, c3, c4 = np.loadtxt(p1 + '/Atlas/code_us_nl_ata.dat', usecols=(1,2,3,4), unpack=True)
+#nn = np.loadtxt(p1 + '/Atlas/code_us_nl_ata.dat', usecols=0, unpack=True, dtype=str)
+#c1, c2, c3, c4 = np.loadtxt(p1 + '/Atlas/code_us_nl_ata.dat', usecols=(1,2,3,4), unpack=True)
+### Saving Results
+#f1 = open(p1r + 'MCS_Atlas_code.dat', 'w')
+#f1.write('#Name\t\t MCS_u1\t\t MCS_u1_err\t\t MCS_u2\t\t MCS_u2_err\n')
+#####
 
-##### Saving Results
-f1 = open(p1r + 'MCS_Atlas_code.dat', 'w')
+
+##### Run-2: For Atlas - Claret (2017) LDCs
+nn = np.loadtxt(p1 + '/Atlas/claret_us_nl_ata.dat', usecols=0, unpack=True, dtype=str)
+c1, c2, c3, c4 = np.loadtxt(p1 + '/Atlas/claret_us_nl_ata.dat', usecols=(1,2,3,4), unpack=True)
+### Saving Results
+f1 = open(p1r + 'MCS_Atlas_claret.dat', 'w')
 f1.write('#Name\t\t MCS_u1\t\t MCS_u1_err\t\t MCS_u2\t\t MCS_u2_err\n')
 
 for i in range(len(a_j)):
