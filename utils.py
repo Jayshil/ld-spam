@@ -44,6 +44,39 @@ def freedman_diaconis(data, returnas="width"):
 		result = int((datrng / bw) + 1)
 	return(result)
 
+def average_resid(diff, diffe):
+    """
+    Upon giving array of residuals and
+    errors in them, this function evaluates
+    median residual and uncertainty in it.
+    ---------------------------------------
+    Parameters:
+    -----------
+    diff : numpy.ndarray
+        Array of residuals
+        Each point gives residual for one planet
+    diffe : numpy.ndarray
+        Array of errors in residuals
+        Each point gives standard deviation in residuals for one planet
+    -----------
+    return
+    -----------
+    float, float :
+        Median residual and error in it
+    """
+    diff_tmp = np.random.normal(0,0,10000)
+
+    for i in range(len(diff)):
+        diff1 = np.random.normal(diff[i], diffe[i], 10000)
+        diff_tmp = np.vstack((diff_tmp, diff1))
+
+    diffi = diff_tmp[1:]
+    mean8 = np.mean(diffi, axis=0)
+
+    med8 = np.median(mean8)
+    std8 = np.std(mean8)
+    return med8, std8
+
 
 def image_double(xdata1, xdata2, xerr1, xerr2, ydata1, ydata2, yerr1, yerr2, label1, label2, xlabel, ylabel, ttl):
     """
@@ -72,6 +105,9 @@ def image_double(xdata1, xdata2, xerr1, xerr2, ydata1, ydata2, yerr1, yerr2, lab
     -----------
     matplotlib.figure
         showing figure object
+    tuple, tuple
+        average difference (with standard deviation)
+        b/w (xdata1 & ydata1) and (xdata2 & ydata2)
     """
     # Setting up the limits of the figure
     # x-limit
@@ -145,6 +181,10 @@ def image_double(xdata1, xdata2, xerr1, xerr2, ydata1, ydata2, yerr1, yerr2, lab
     plt.xlabel('Residuals')
 
     plt.subplots_adjust(hspace = 0.3)
+
+    med1, std1 = average_resid(diff_1, diff_1e)
+    med2, std2 = average_resid(diff_2, diff_2e)
+    return (med1, std1), (med2, std2)
 
 
 def single_image(xdata, xerr, ydata, yerr, xlabel, ylabel):
