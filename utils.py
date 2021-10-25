@@ -78,7 +78,7 @@ def average_resid(diff, diffe):
     return med8, std8
 
 
-def image_double(xdata1, xdata2, xerr1, xerr2, ydata1, ydata2, yerr1, yerr2, label1, label2, xlabel, ylabel, ttl):
+def image_double(xdata1, xdata2, xerr1, xerr2, ydata1, ydata2, yerr1, yerr2, label1, label2, xlabel, ylabel, ttl, lim1=None, lim2=None):
     """
     Function to make figures according
     to Patel & Espinoza (2021) pattern
@@ -128,7 +128,10 @@ def image_double(xdata1, xdata2, xerr1, xerr2, ydata1, ydata2, yerr1, yerr2, lab
 
     # Making a line for xdata = ydata, and for
     # ydata = 0 for the bottom panel
-    xlin = ylin = np.linspace(low_lim, upp_lim, 100)
+    if lim1 != None:
+        xlin = ylin = np.linspace(lim1, lim2, 100)
+    else:
+        xlin = ylin = np.linspace(low_lim, upp_lim, 100)
 
     # Difference between xdata1 and ydata1
     diff_1, diff_1e = np.zeros(len(xdata1)), np.zeros(len(xdata1))
@@ -136,7 +139,7 @@ def image_double(xdata1, xdata2, xerr1, xerr2, ydata1, ydata2, yerr1, yerr2, lab
     for i in range(len(xdata1)):
         x11 = np.random.normal(xdata1[i], xerr1[i], 10000)
         y11 = np.random.normal(ydata1[i], yerr1[i], 10000)
-        diff1 = x11 - y11
+        diff1 = y11 - x11
         diff_1[i] = np.median(diff1)
         diff_1e[i] = np.std(diff1)
 
@@ -146,7 +149,7 @@ def image_double(xdata1, xdata2, xerr1, xerr2, ydata1, ydata2, yerr1, yerr2, lab
     for i in range(len(xdata1)):
         x22 = np.random.normal(xdata2[i], xerr2[i], 10000)
         y22 = np.random.normal(ydata2[i], yerr2[i], 10000)
-        diff2 = x22 - y22
+        diff2 = y22 - x22
         diff_2[i] = np.median(diff2)
         diff_2e[i] = np.std(diff2)
 
@@ -163,8 +166,12 @@ def image_double(xdata1, xdata2, xerr1, xerr2, ydata1, ydata2, yerr1, yerr2, lab
     ax1.plot(xlin, ylin, 'k--')
     ax1.grid()
 
-    ax1.set_xlim([low_lim, upp_lim])
-    ax1.set_ylim([low_lim, upp_lim])
+    if lim1 != None:
+        ax1.set_xlim([lim1, lim2])
+        ax1.set_ylim([lim1, lim2])
+    else:
+        ax1.set_xlim([low_lim, upp_lim])
+        ax1.set_ylim([low_lim, upp_lim])
 
     plt.legend(loc='best')
     plt.xlabel(xlabel)
