@@ -51,42 +51,42 @@ u1_cla_pho, u1_cla_ata = utl.image_double(xdata1=u1_j, xdata2=u1_j, xerr1=u1_jp,
      ydata1=u1p_c17, ydata2=u1a_c17, yerr1=errs, yerr2=errs,\
      label1='PHOENIX SPAM LDCs', label2='ATLAS SPAM LDCs', xlabel=r'$u_1$ (Empirical)', ylabel=r'$u_1$ (Theoretical)',\
      ttl='Values from Claret (2017)', lim1=l1, lim2=l2)
-plt.savefig(p1d + 'u1_cla.pdf')
+plt.savefig(p1d + 'u1_cla_SPAM.pdf')
 
 ## u1_cla_r
 u1_cla_pho1, u1_cla_pho_r = utl.image_double(xdata1=u1_j, xdata2=u1_j, xerr1=u1_jp, xerr2=u1_jp,\
      ydata1=u1p_c17, ydata2=u1p_c17r, yerr1=errs, yerr2=errs,\
      label1='PHOENIX (q-method) SPAM LDCs', label2='PHOENIX (r-method) SPAM LDCs', xlabel=r'$u_1$ (Empirical)', ylabel=r'$u_1$ (Theoretical)',\
      ttl='Values from Claret (2017)', lim1=l1, lim2=l2)
-plt.savefig(p1d + 'u1_cla_r.pdf')
+plt.savefig(p1d + 'u1_cla_SPAM_r.pdf')
 
 ## u1_code
 u1_code_pho, u1_code_ata = utl.image_double(xdata1=u1_j, xdata2=u1_j, xerr1=u1_jp, xerr2=u1_jp,\
      ydata1=u1p_ej15, ydata2=u1a_ej15, yerr1=errs, yerr2=errs,\
      label1='PHOENIX SPAM LDCs', label2='ATLAS SPAM LDCs', xlabel=r'$u_1$ (Empirical)', ylabel=r'$u_1$ (Theoretical)',\
      ttl='Values from Espinoza \& Jordan (2015)', lim1=l1, lim2=l2)
-plt.savefig(p1d + 'u1_code.pdf')
+plt.savefig(p1d + 'u1_code_SPAM.pdf')
 
 ## u2_cla
 u2_cla_pho, u2_cla_ata = utl.image_double(xdata1=u2_j, xdata2=u2_j, xerr1=u2_jp, xerr2=u2_jp,\
      ydata1=u2p_c17, ydata2=u2a_c17, yerr1=errs, yerr2=errs,\
      label1='PHOENIX SPAM LDCs', label2='ATLAS SPAM LDCs', xlabel=r'$u_2$ (Empirical)', ylabel=r'$u_2$ (Theoretical)',\
      ttl='Values from Claret (2017)', lim1=l1, lim2=l2)
-plt.savefig(p1d + 'u2_cla.pdf')
+plt.savefig(p1d + 'u2_cla_SPAM.pdf')
 
 ## u2_cla_r
 u2_cla_pho1, u2_cla_pho_r = utl.image_double(xdata1=u2_j, xdata2=u2_j, xerr1=u2_jp, xerr2=u2_jp,\
      ydata1=u2p_c17, ydata2=u2p_c17r, yerr1=errs, yerr2=errs,\
      label1='PHOENIX (q-method) SPAM LDCs', label2='PHOENIX (r-method) SPAM LDCs', xlabel=r'$u_2$ (Empirical)', ylabel=r'$u_2$ (Theoretical)',\
      ttl='Values from Claret (2017)', lim1=l1, lim2=l2)
-plt.savefig(p1d + 'u2_cla_r.pdf')
+plt.savefig(p1d + 'u2_cla_SPAM_r.pdf')
 
 ## u2_code
 u2_code_pho, u2_code_ata = utl.image_double(xdata1=u2_j, xdata2=u2_j, xerr1=u2_jp, xerr2=u2_jp,\
      ydata1=u2p_ej15, ydata2=u2a_ej15, yerr1=errs, yerr2=errs,\
      label1='PHOENIX SPAM LDCs', label2='ATLAS SPAM LDCs', xlabel=r'$u_2$ (Empirical)', ylabel=r'$u_2$ (Theoretical)',\
      ttl='Values from Espinoza \& Jordan (2015)', lim1=l1, lim2=l2)
-plt.savefig(p1d + 'u2_code.pdf')
+plt.savefig(p1d + 'u2_code_SPAM.pdf')
 
 
 ## Making tables for mean offset
