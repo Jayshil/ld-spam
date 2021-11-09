@@ -543,7 +543,7 @@ def teff_vs_resid(teff, xdata1, xerr1, ydata1, yerr1, xdata2, xerr2, ydata2, yer
         dict_bic[model[i]] = bic[i]
         dict_bic1[model[i]] = bic1[i]
 
-    best_bic = utl.lowest_bic(dict_bic)
+    best_bic = lowest_bic(dict_bic)
     if 'constant' in best_bic:
         plt.plot(t11, constant(t11, *popt_c), color = 'orangered', ls = '-.', zorder=3, alpha=0.85)
     elif 'linear' in best_bic:
@@ -551,7 +551,7 @@ def teff_vs_resid(teff, xdata1, xerr1, ydata1, yerr1, xdata2, xerr2, ydata2, yer
     elif 'quadratic' in best_bic:
         plt.plot(t11, quadratic(t11, *popt_q), color = 'orangered', ls='-.', zorder=3, alpha=0.85)
 
-    best_bic1 = utl.lowest_bic(dict_bic1)
+    best_bic1 = lowest_bic(dict_bic1)
     if 'constant' in best_bic1:
         plt.plot(t11, constant(t11, *popt1_c), color = 'cornflowerblue', ls = '-.', zorder=3, alpha=0.85)
     elif 'linear' in best_bic1:
