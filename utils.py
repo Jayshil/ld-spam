@@ -565,3 +565,4 @@ def teff_vs_resid(teff, xdata1, xerr1, ydata1, yerr1, xdata2, xerr2, ydata2, yer
     plt.legend(loc='best')
     plt.ylabel(ylabel)
     plt.xlabel('Effective Temperature')
+    plt.tight_layout()
