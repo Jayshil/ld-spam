@@ -55,18 +55,21 @@ l1, l2 = -0.4, 1.4
 # u1_cla_te
 utl.teff_vs_resid(teff=teff1, xdata1=u1_j, xerr1=u1_jp, ydata1=u1p_c17, yerr1=errs, xdata2=u1_j,\
       xerr2=u1_jp, ydata2=u1a_c17, yerr2=errs, label1='PHOENIX SPAM LDCs', label2='ATLAS SPAM LDCs', ylabel=r'Residuals in $u_1$ Claret (2017) LDCs')
+plt.ylim([-1.5,0.5])
 plt.savefig(p2d + 'u1_cla_te_SPAM.pdf')
 #plt.show()
 
 # u1_cla_te_r
 utl.teff_vs_resid(teff=teff1, xdata1=u1_j, xerr1=u1_jp, ydata1=u1p_c17, yerr1=errs, xdata2=u1_j,\
       xerr2=u1_jp, ydata2=u1p_c17r, yerr2=errs, label1='PHOENIX SPAM LDCs - q method', label2='PHOENIX SPAM LDCs - r method', ylabel=r'Residuals in $u_1$ Claret (2017) LDCs')
+plt.ylim([-1.5,0.5])
 plt.savefig(p2d + 'u1_cla_te_r_SPAM.pdf')
 #plt.show()
 
 # u1_code_te
 utl.teff_vs_resid(teff=teff1, xdata1=u1_j, xerr1=u1_jp, ydata1=u1p_ej15, yerr1=errs, xdata2=u1_j,\
       xerr2=u1_jp, ydata2=u1a_ej15, yerr2=errs, label1='PHOENIX SPAM LDCs', label2='ATLAS SPAM LDCs', ylabel=r'Residuals in $u_1$ Espinoza \& Jordan (2015) LDCs')
+plt.ylim([-1.5,0.5])
 plt.savefig(p2d + 'u1_code_te_SPAM.pdf')
 #plt.show()
 
@@ -74,12 +77,14 @@ plt.savefig(p2d + 'u1_code_te_SPAM.pdf')
 # u2_cla_te
 utl.teff_vs_resid(teff=teff1, xdata1=u2_j, xerr1=u2_jp, ydata1=u2p_c17, yerr1=errs, xdata2=u2_j,\
       xerr2=u2_jp, ydata2=u2a_c17, yerr2=errs, label1='PHOENIX SPAM LDCs', label2='ATLAS SPAM LDCs', ylabel=r'Residuals in $u_2$ Claret (2017) LDCs')
+plt.ylim([-0.75,1.25])
 plt.savefig(p2d + 'u2_cla_te_SPAM.pdf')
 #plt.show()
 
 # u2_cla_te_r
 utl.teff_vs_resid(teff=teff1, xdata1=u2_j, xerr1=u2_jp, ydata1=u2p_c17, yerr1=errs, xdata2=u2_j,\
       xerr2=u2_jp, ydata2=u2p_c17r, yerr2=errs, label1='PHOENIX SPAM LDCs - q method', label2='PHOENIX SPAM LDCs - r method', ylabel=r'Residuals in $u_2$ Claret (2017) LDCs')
+plt.ylim([-0.75,1.25])
 plt.savefig(p2d + 'u2_cla_te_r_SPAM.pdf')
 #plt.show()
 
@@ -87,5 +92,6 @@ plt.savefig(p2d + 'u2_cla_te_r_SPAM.pdf')
 # u2_code_te
 utl.teff_vs_resid(teff=teff1, xdata1=u2_j, xerr1=u2_jp, ydata1=u2p_ej15, yerr1=errs, xdata2=u2_j,\
       xerr2=u2_jp, ydata2=u2a_ej15, yerr2=errs, label1='PHOENIX SPAM LDCs', label2='ATLAS SPAM LDCs', ylabel=r'Residuals in $u_2$ Espinoza \& Jordan (2015) LDCs')
+plt.ylim([-0.75,1.25])
 plt.savefig(p2d + 'u2_code_te_SPAM.pdf')
 #plt.show()
