@@ -51,7 +51,7 @@ tab1['u1_cla_ata'], tab1['u1_cla_ata'].info.format, tab1['u1_cla_ata'].descripti
 tab1['u2_cla_ata'], tab1['u2_cla_ata'].info.format, tab1['u2_cla_ata'].description = u2_cla_ata, '%1.2f', 'u2 from C17 ATLAS'
 tab1['u1_cla_pho'], tab1['u1_cla_pho'].info.format, tab1['u1_cla_pho'].description = u1_cla_pho, '%1.2f', 'u1 from C17 PHOENIX'
 tab1['u2_cla_pho'], tab1['u2_cla_pho'].info.format, tab1['u2_cla_pho'].description = u2_cla_pho, '%1.2f', 'u2 from C17 PHOENIX'
-tab1['u1_cla_pho_r'], tab1['u1_cla_pho_r'].info.format, tab1['u1_cla_pho_r'].description = u1_cla_pho, '%1.2f', 'u1 from C17 PHOENIX, with r-method'
-tab1['u2_cla_pho_r'], tab1['u2_cla_pho_r'].info.format, tab1['u2_cla_pho_r'].description = u2_cla_pho, '%1.2f', 'u2 from C17 PHOENIX, with r-method'
+tab1['u1_cla_pho_r'], tab1['u1_cla_pho_r'].info.format, tab1['u1_cla_pho_r'].description = u1_cla_pho_r, '%1.2f', 'u1 from C17 PHOENIX, with r-method'
+tab1['u2_cla_pho_r'], tab1['u2_cla_pho_r'].info.format, tab1['u2_cla_pho_r'].description = u2_cla_pho_r, '%1.2f', 'u2 from C17 PHOENIX, with r-method'
 
 tab1.write(os.getcwd() + '/Table/spam_ldc_ascii_mrt.dat', format='ascii.mrt', overwrite=True, delimiter='\t\t')
